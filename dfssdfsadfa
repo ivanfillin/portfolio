@@ -1,0 +1,7 @@
+filter.lfs.clean=git-lfs clean -- %f
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+user.name=ivanfillin
+user.email=56824092+ivanfillin@users.noreply.github.com
+gui.recentrepo=C:/OpenServer/domains/OSC_CHAT_bot

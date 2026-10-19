@@ -235,7 +235,7 @@
             color: #dcdce0;
         }
 
-        /* ---------- SKILLS (перенесено вниз) ---------- */
+        /* ---------- SKILLS ---------- */
         .skills {
             max-width: var(--max);
             margin: 0 auto;
@@ -316,7 +316,7 @@
             color: var(--gold-2);
         }
 
-        /* ---------- PROJECTS SECTION ---------- */
+        /* ---------- PROJECTS ---------- */
         main {
             max-width: var(--max);
             margin: 0 auto;
@@ -364,7 +364,6 @@
             margin: 2px 0 0;
         }
 
-        /* ---------- DETAILS (скрытые теги + пайплайн) ---------- */
         .project-details {
             margin-top: 18px;
             border: 1px solid var(--line);
@@ -659,172 +658,326 @@
             }
         }
 
-        /* ---------- LIGHTBOX ---------- */
-        .lb {
+        /* ---------- VIEWER (детальный просмотр) ---------- */
+        .viewer {
             position: fixed;
             inset: 0;
-            z-index: 100;
-            background: rgba(6, 6, 8, .96);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 11, 0.98);
+            z-index: 9999;
             display: none;
-            align-items: center;
-            justify-content: center;
             opacity: 0;
-            transition: opacity .25s ease;
+            transition: opacity 0.3s ease;
+            touch-action: none;
+            user-select: none;
+            overflow: hidden;
         }
 
-        .lb.open {
-            display: flex;
+        .viewer.open {
+            display: block;
             opacity: 1;
         }
 
-        .lb-stage {
+        .viewer-header {
+            position: absolute;
+            top: 0;
+            inset-inline: 0;
+            height: 76px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 100;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
+        }
+
+        .viewer-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .viewer-category {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 8px 16px;
+            border-radius: 30px;
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 260px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .viewer-counter {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 14px;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 8px 14px;
+            border-radius: 30px;
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .viewer-close-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            backdrop-filter: blur(14px);
+            transition: var(--transition, all .25s ease);
+        }
+
+        .viewer-close-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .viewer-bottom-controls {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .zoom-group {
             position: relative;
+            display: flex;
+            align-items: center;
+            background: rgba(24, 24, 26, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 40px;
+            height: 44px;
+            padding: 2px 6px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+        }
+
+        .zoom-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            font-size: 22px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        .zoom-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .zoom-btn:active {
+            transform: scale(0.9);
+        }
+
+        .zoom-display {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 0 8px;
+            min-width: 48px;
+            text-align: center;
+        }
+
+        .zoom-reset-btn {
+            position: absolute;
+            left: calc(100% + 10px);
+            top: 50%;
+            transform: translateY(-50%) scale(0.8);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(24, 24, 26, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+            color: #ffb833;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .zoom-reset-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(-50%) scale(1);
+        }
+
+        .zoom-reset-btn:hover {
+            color: #ffd073;
+            background: rgba(40, 40, 44, 0.95);
+        }
+
+        .viewer-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #fff;
+            font-size: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            transition: all .25s ease;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .viewer-arrow:hover {
+            background: rgba(255, 255, 255, 0.28);
+        }
+
+        .viewer-arrow.prev {
+            left: 24px;
+        }
+
+        .viewer-arrow.next {
+            right: 24px;
+        }
+
+        @media (max-width: 767px) {
+            .viewer-arrow {
+                display: none !important;
+            }
+        }
+
+        .viewer-stage {
             width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            touch-action: none;
+        }
+
+        .viewer-track {
+            display: flex;
+            width: 300vw;
+            height: 100%;
+            transform: translateX(-100vw);
+            will-change: transform;
+        }
+
+        .viewer-slide-slot {
+            width: 100vw;
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            touch-action: none;
+            flex-shrink: 0;
+            position: relative;
             overflow: hidden;
-            cursor: grab;
         }
 
-        .lb-stage:active {
-            cursor: grabbing;
+        .viewer-image-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 90vw;
+            max-height: 76vh;
+            width: fit-content;
+            height: fit-content;
+            will-change: transform;
+            transform-origin: center center;
         }
 
-        .lb-stage img,
-        .lb-stage video {
-            max-width: min(92vw, 1300px);
-            max-height: calc(88vh - 60px);
+        .viewer-image-wrap img {
+            max-width: 90vw;
+            max-height: 76vh;
             width: auto;
             height: auto;
             object-fit: contain;
-            border-radius: 4px;
-            transform-origin: center center;
-            will-change: transform;
+            border-radius: 8px;
+            pointer-events: none;
             user-select: none;
             -webkit-user-drag: none;
+            display: block;
         }
 
-        .lb-btn {
-            position: absolute;
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: rgba(22, 22, 26, .75);
-            border: 1px solid var(--line-2);
-            backdrop-filter: blur(8px);
-            transition: .2s;
-            cursor: pointer;
+        .viewer-image-wrap video {
+            max-width: 88vw;
+            max-height: 72vh;
+            width: auto;
+            height: auto;
+            border-radius: 8px;
+            object-fit: contain;
+            display: block;
+            background: #000;
+            touch-action: auto;
         }
 
-        .lb-btn:hover {
-            background: rgba(201, 168, 106, .2);
-            border-color: var(--gold);
-        }
-
-        .lb-close {
-            top: calc(16px + env(safe-area-inset-top, 0px));
-            right: 16px;
-        }
-
-        .lb-prev {
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .lb-next {
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .lb-btn svg {
-            width: 20px;
-            height: 20px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 1.6;
-            color: #eaeaea;
-        }
-
-        .lb-tools {
-            position: absolute;
-            bottom: calc(18px + var(--safe));
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 6px;
-            z-index: 5;
-            padding: 6px;
-            border-radius: 100px;
-            background: rgba(22, 22, 26, .8);
-            border: 1px solid var(--line-2);
-            backdrop-filter: blur(8px);
-        }
-
-        .lb-tools button {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #dcdce0;
-            transition: .2s;
-            cursor: pointer;
-        }
-
-        .lb-tools button:hover {
-            background: rgba(255, 255, 255, .1);
-            color: var(--gold-2);
-        }
-
-        .lb-tools button svg {
-            width: 16px;
-            height: 16px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 1.8;
-        }
-
-        .lb-tools .zoom-val {
-            font-size: 11px;
-            min-width: 44px;
-            color: var(--muted);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .lb-counter {
-            position: absolute;
-            top: calc(20px + env(safe-area-inset-top, 0px));
-            left: 22px;
-            font-size: 12px;
-            letter-spacing: .12em;
-            color: var(--muted);
-            z-index: 5;
-        }
-
-        @media (max-width:640px) {
-
-            .lb-prev,
-            .lb-next {
-                display: none
+        @media (max-width: 600px) {
+            .viewer-header {
+                height: 68px;
+                padding: 0 14px;
             }
 
-            .lb-stage img,
-            .lb-stage video {
-                max-width: 100vw;
-                max-height: calc(100vh - 110px);
+            .viewer-category {
+                font-size: 12px;
+                padding: 6px 12px;
+                max-width: 160px;
+            }
+
+            .viewer-counter {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            .viewer-close-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 20px;
+            }
+
+            .viewer-bottom-controls {
+                bottom: 20px;
+            }
+
+            .viewer-image-wrap,
+            .viewer-image-wrap img {
+                max-width: 96vw;
+                max-height: 72vh;
+            }
+
+            .viewer-image-wrap video {
+                max-width: 96vw;
+                max-height: 66vh;
             }
         }
 
@@ -939,7 +1092,7 @@
     <!-- КЕЙСЫ -->
     <main id="projects"></main>
 
-    <!-- СТЕК И КОМПЕТЕНЦИИ (перенесено вниз, перед контактами) -->
+    <!-- СТЕК И КОМПЕТЕНЦИИ -->
     <section class="skills" id="skills">
         <div class="skills-head">
             <div class="hero-kicker">Пайплайн и стек инструментов</div>
@@ -1010,49 +1163,35 @@
         <small>&copy; <span id="year"></span> Иван Филин &middot; 3D / AI CG визуал для ювелирных брендов</small>
     </footer>
 
-    <!-- LIGHTBOX -->
-    <div class="lb" id="lb" aria-hidden="true" role="dialog">
-        <div class="lb-counter" id="lbCounter"></div>
-        <button class="lb-btn lb-close" id="lbClose" aria-label="Закрыть">
-            <svg viewBox="0 0 24 24">
-                <path d="M6 6l12 12M18 6L6 18" />
-            </svg>
-        </button>
-        <button class="lb-btn lb-prev" id="lbPrev" aria-label="Назад">
-            <svg viewBox="0 0 24 24">
-                <path d="M15 5l-7 7 7 7" />
-            </svg>
-        </button>
-        <button class="lb-btn lb-next" id="lbNext" aria-label="Вперёд">
-            <svg viewBox="0 0 24 24">
-                <path d="M9 5l7 7-7 7" />
-            </svg>
-        </button>
+    <!-- VIEWER (детальный просмотр с навигацией и pinch-zoom) -->
+    <div class="viewer" id="viewer" aria-hidden="true" role="dialog">
+        <div class="viewer-header">
+            <div class="viewer-meta">
+                <span class="viewer-category" id="viewerCategory">Проект</span>
+                <span class="viewer-counter" id="viewerCounter">1 / 1</span>
+            </div>
+            <button class="viewer-close-btn" id="viewerCloseBtn" title="Закрыть" aria-label="Закрыть">✕</button>
+        </div>
 
-        <div class="lb-stage" id="lbStage"></div>
+        <button class="viewer-arrow prev" id="arrowPrev" title="Предыдущее" aria-label="Предыдущее">‹</button>
+        <button class="viewer-arrow next" id="arrowNext" title="Следующее" aria-label="Следующее">›</button>
 
-        <div class="lb-tools">
-            <button id="zoomOut" aria-label="Уменьшить">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="7" />
-                    <path d="M8 11h6M20 20l-3.5-3.5" />
-                </svg>
-            </button>
-            <div class="zoom-val" id="zoomVal">100%</div>
-            <button id="zoomIn" aria-label="Увеличить">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="7" />
-                    <path d="M11 8v6M8 11h6M20 20l-3.5-3.5" />
-                </svg>
-            </button>
-            <button id="zoomReset" aria-label="Сбросить">
-                <svg viewBox="0 0 24 24">
-                    <path d="M4 4v6h6" />
-                    <path d="M20 20v-6h-6" />
-                    <path d="M20 9a8 8 0 0 0-14-3L4 8" />
-                    <path d="M4 15a8 8 0 0 0 14 3l2-2" />
-                </svg>
-            </button>
+        <div class="viewer-stage" id="viewerStage">
+            <div class="viewer-track" id="viewerTrack">
+                <div class="viewer-slide-slot" id="slotPrev"></div>
+                <div class="viewer-slide-slot" id="slotCurr"></div>
+                <div class="viewer-slide-slot" id="slotNext"></div>
+            </div>
+        </div>
+
+        <div class="viewer-bottom-controls" id="viewerControls">
+            <div class="zoom-group">
+                <button class="zoom-btn" id="zoomOutBtn" title="Уменьшить" aria-label="Уменьшить">−</button>
+                <span class="zoom-display" id="zoomDisplay">100%</span>
+                <button class="zoom-btn" id="zoomInBtn" title="Увеличить" aria-label="Увеличить">+</button>
+                <button class="zoom-reset-btn" id="zoomResetBtn" title="Сбросить к 100%"
+                    aria-label="Сбросить">↺</button>
+            </div>
         </div>
     </div>
 
@@ -1227,171 +1366,318 @@
         document.querySelectorAll(".reveal").forEach(el => revIO.observe(el));
 
         /* ============================================================
-           LIGHTBOX
+           VIEWER — детальный просмотр (3-слотовая карусель + zoom)
            ============================================================ */
-        const lb = document.getElementById("lb");
-        const lbStage = document.getElementById("lbStage");
-        const lbCounter = document.getElementById("lbCounter");
-        const zoomVal = document.getElementById("zoomVal");
+        const viewer = document.getElementById('viewer');
+        const track = document.getElementById('viewerTrack');
+        const slotPrev = document.getElementById('slotPrev');
+        const slotCurr = document.getElementById('slotCurr');
+        const slotNext = document.getElementById('slotNext');
+        const viewerCategory = document.getElementById('viewerCategory');
+        const viewerCounter = document.getElementById('viewerCounter');
+        const viewerControls = document.getElementById('viewerControls');
+        const zoomInBtn = document.getElementById('zoomInBtn');
+        const zoomOutBtn = document.getElementById('zoomOutBtn');
+        const zoomResetBtn = document.getElementById('zoomResetBtn');
+        const zoomDisplay = document.getElementById('zoomDisplay');
+        const stage = document.getElementById('viewerStage');
+        const arrowPrevEl = document.getElementById('arrowPrev');
+        const arrowNextEl = document.getElementById('arrowNext');
 
-        let state = {
+        const viewerState = {
             items: [],
             index: 0,
+            title: '',
             scale: 1,
-            tx: 0, ty: 0,
-            minScale: 1,
-            maxScale: 4
+            panX: 0,
+            panY: 0,
+            isDragging: false,
+            isAnimating: false,
+            isPinching: false,
+            startX: 0,
+            startY: 0,
+            dragX: 0,
+            pinchStartDist: 0,
+            pinchStartScale: 1
         };
 
-        function openLightbox(projectId, index) {
-            const project = projects.find(p => p.id === projectId);
-            if (!project) return;
-            state.items = project.media.map(m => ({ ...m }));
-            state.index = index;
-            state.scale = 1; state.tx = 0; state.ty = 0;
-            renderSlide();
-            lb.classList.add("open");
-            lb.setAttribute("aria-hidden", "false");
-            document.body.style.overflow = "hidden";
+        function createSlideHTML(item) {
+            if (item.type === 'video') {
+                return `
+                    <div class="viewer-image-wrap viewer-video-wrap">
+                        <video src="${item.src}" poster="${item.poster || ''}" controls playsinline autoplay muted preload="metadata"></video>
+                    </div>`;
+            }
+            return `
+                <div class="viewer-image-wrap">
+                    <img src="${item.src}" alt="${item.alt || ''}" draggable="false">
+                </div>`;
         }
 
-        function closeLightbox() {
-            lb.classList.remove("open");
-            lb.setAttribute("aria-hidden", "true");
-            document.body.style.overflow = "";
-            lbStage.innerHTML = "";
+        function pauseAllVideos() {
+            document.querySelectorAll('.viewer-stage video').forEach(v => {
+                try { v.pause(); } catch (e) { /* noop */ }
+            });
         }
 
-        function renderSlide() {
-            const m = state.items[state.index];
-            if (!m) return;
-            lbStage.innerHTML = "";
-            state.scale = 1; state.tx = 0; state.ty = 0;
+        function isCurrentVideo() {
+            const wrap = slotCurr.querySelector('.viewer-image-wrap');
+            return !!(wrap && wrap.querySelector('video'));
+        }
 
-            if (m.type === "video") {
-                const v = document.createElement("video");
-                v.src = m.src;
-                v.controls = true;
-                v.playsInline = true;
-                v.autoplay = true;
-                v.muted = true;
-                if (m.poster) v.poster = m.poster;
-                lbStage.appendChild(v);
-                document.querySelector(".lb-tools").style.display = "none";
+        function resetTrackPosition() {
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(-100vw)';
+            viewerState.dragX = 0;
+        }
+
+        function renderViewerSlides() {
+            pauseAllVideos();
+            const total = viewerState.items.length;
+            if (!total) return;
+
+            const prevIdx = (viewerState.index - 1 + total) % total;
+            const nextIdx = (viewerState.index + 1) % total;
+
+            slotPrev.innerHTML = createSlideHTML(viewerState.items[prevIdx]);
+            slotCurr.innerHTML = createSlideHTML(viewerState.items[viewerState.index]);
+            slotNext.innerHTML = createSlideHTML(viewerState.items[nextIdx]);
+
+            viewerCategory.textContent = viewerState.title;
+            viewerCounter.textContent = `${viewerState.index + 1} / ${total}`;
+
+            // Для видео прячем зум-панель (нативные контролы видео самодостаточны)
+            viewerControls.style.display = isCurrentVideo() ? 'none' : 'flex';
+
+            // Стрелки только если медиа > 1
+            const showArrows = total > 1;
+            arrowPrevEl.style.display = showArrows ? '' : 'none';
+            arrowNextEl.style.display = showArrows ? '' : 'none';
+
+            resetZoom(false);
+            resetTrackPosition();
+        }
+
+        function applyZoom(animate = true) {
+            if (isCurrentVideo()) return;
+            const wrap = slotCurr.querySelector('.viewer-image-wrap');
+            if (!wrap) return;
+
+            zoomDisplay.textContent = `${Math.round(viewerState.scale * 100)}%`;
+
+            if (viewerState.scale > 1.05) {
+                zoomResetBtn.classList.add('visible');
             } else {
-                const img = document.createElement("img");
-                img.src = m.src;
-                img.alt = m.alt || "";
-                img.draggable = false;
-                lbStage.appendChild(img);
-                document.querySelector(".lb-tools").style.display = "flex";
+                zoomResetBtn.classList.remove('visible');
+                viewerState.panX = 0;
+                viewerState.panY = 0;
             }
 
-            lbCounter.textContent = `${state.index + 1} / ${state.items.length}`;
-            applyTransform();
-        }
-
-        function applyTransform() {
-            const el = lbStage.firstElementChild;
-            if (!el || el.tagName === "VIDEO") return;
-            el.style.transform = `translate(${state.tx}px, ${state.ty}px) scale(${state.scale})`;
-            zoomVal.textContent = Math.round(state.scale * 100) + "%";
-        }
-
-        function setScale(s) {
-            state.scale = Math.min(state.maxScale, Math.max(state.minScale, s));
-            if (state.scale === 1) { state.tx = 0; state.ty = 0; }
-            applyTransform();
-        }
-
-        function prevSlide() {
-            state.index = (state.index - 1 + state.items.length) % state.items.length;
-            renderSlide();
-        }
-
-        function nextSlide() {
-            state.index = (state.index + 1) % state.items.length;
-            renderSlide();
-        }
-
-        document.getElementById("lbClose").onclick = closeLightbox;
-        document.getElementById("lbPrev").onclick = prevSlide;
-        document.getElementById("lbNext").onclick = nextSlide;
-        document.getElementById("zoomIn").onclick = () => setScale(state.scale * 1.4);
-        document.getElementById("zoomOut").onclick = () => setScale(state.scale / 1.4);
-        document.getElementById("zoomReset").onclick = () => setScale(1);
-
-        lb.addEventListener("click", e => { if (e.target === lb) closeLightbox(); });
-
-        document.addEventListener("keydown", e => {
-            if (!lb.classList.contains("open")) return;
-            if (e.key === "Escape") closeLightbox();
-            if (e.key === "ArrowLeft") prevSlide();
-            if (e.key === "ArrowRight") nextSlide();
-        });
-
-        document.addEventListener("click", e => {
-            const media = e.target.closest(".media");
-            if (!media) return;
-            const gallery = media.closest(".gallery");
-            if (!gallery) return;
-            openLightbox(gallery.dataset.project, parseInt(media.dataset.index, 10));
-        });
-
-        /* ЖЕСТЫ */
-        let pointers = new Map();
-        let lastDist = 0, startScale = 1;
-        let dragStart = null;
-        let swipeStartX = 0, swipeStartY = 0;
-
-        lbStage.addEventListener("pointerdown", e => {
-            const el = lbStage.firstElementChild;
-            if (!el || el.tagName === "VIDEO") return;
-            lbStage.setPointerCapture(e.pointerId);
-            pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-
-            if (pointers.size === 1) {
-                swipeStartX = e.clientX;
-                swipeStartY = e.clientY;
-                dragStart = { x: e.clientX - state.tx, y: e.clientY - state.ty };
-            } else if (pointers.size === 2) {
-                const [a, b] = [...pointers.values()];
-                lastDist = Math.hypot(a.x - b.x, a.y - b.y);
-                startScale = state.scale;
+            wrap.style.transition = animate ? 'transform 0.25s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+            if (viewerState.scale > 1) {
+                wrap.style.transform = `translate(${viewerState.panX}px, ${viewerState.panY}px) scale(${viewerState.scale})`;
+            } else {
+                wrap.style.transform = 'none';
             }
+        }
+
+        function resetZoom(animate = true) {
+            viewerState.scale = 1;
+            viewerState.panX = 0;
+            viewerState.panY = 0;
+            applyZoom(animate);
+        }
+
+        zoomInBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            viewerState.scale = Math.min(3.5, Number((viewerState.scale + 0.5).toFixed(1)));
+            applyZoom(true);
         });
 
-        lbStage.addEventListener("pointermove", e => {
-            if (!pointers.has(e.pointerId)) return;
-            pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        zoomOutBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            viewerState.scale = Math.max(1, Number((viewerState.scale - 0.5).toFixed(1)));
+            applyZoom(true);
+        });
 
-            if (pointers.size === 2) {
-                const [a, b] = [...pointers.values()];
-                const d = Math.hypot(a.x - b.x, a.y - b.y);
-                if (lastDist > 0) setScale(startScale * (d / lastDist));
-            } else if (pointers.size === 1 && dragStart && state.scale > 1) {
-                state.tx = e.clientX - dragStart.x;
-                state.ty = e.clientY - dragStart.y;
-                applyTransform();
+        zoomResetBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetZoom(true);
+        });
+
+        slotCurr.addEventListener('dblclick', () => {
+            if (isCurrentVideo()) return;
+            viewerState.scale = (viewerState.scale === 1) ? 2 : 1;
+            applyZoom(true);
+        });
+
+        viewer.addEventListener('wheel', (e) => {
+            if (!viewer.classList.contains('open')) return;
+            if (isCurrentVideo()) return;
+            e.preventDefault();
+            const step = e.deltaY < 0 ? 0.3 : -0.3;
+            viewerState.scale = Math.min(3.5, Math.max(1, viewerState.scale + step));
+            applyZoom(true);
+        }, { passive: false });
+
+        /* --- Pinch-to-zoom --- */
+        function getTouchDistance(e) {
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            return Math.hypot(dx, dy);
+        }
+
+        stage.addEventListener('touchstart', (e) => {
+            if (isCurrentVideo()) return;
+            if (e.touches.length === 2) {
+                viewerState.isPinching = true;
+                viewerState.isDragging = false;
+                viewerState.pinchStartDist = getTouchDistance(e);
+                viewerState.pinchStartScale = viewerState.scale;
             }
-        });
+        }, { passive: true });
 
-        function endPointer(e) {
-            if (pointers.size === 1 && state.scale === 1) {
-                const diffX = e.clientX - swipeStartX;
-                const diffY = e.clientY - swipeStartY;
-                if (Math.abs(diffX) > 45 && Math.abs(diffY) < 60) {
-                    if (diffX < 0) nextSlide();
-                    else prevSlide();
+        stage.addEventListener('touchmove', (e) => {
+            if (viewerState.isPinching && e.touches.length === 2) {
+                const dist = getTouchDistance(e);
+                const factor = dist / viewerState.pinchStartDist;
+                viewerState.scale = Math.min(3.5, Math.max(1, viewerState.pinchStartScale * factor));
+                applyZoom(false);
+            }
+        }, { passive: true });
+
+        stage.addEventListener('touchend', (e) => {
+            if (viewerState.isPinching && e.touches.length < 2) {
+                viewerState.isPinching = false;
+                if (viewerState.scale <= 1.05) {
+                    resetZoom(true);
+                } else {
+                    applyZoom(true);
                 }
             }
-            pointers.delete(e.pointerId);
-            if (pointers.size < 2) lastDist = 0;
-            if (pointers.size === 0) dragStart = null;
+        });
+
+        /* --- Pointer drag / swipe --- */
+        stage.addEventListener('pointerdown', (e) => {
+            if (viewerState.isAnimating || viewerState.isPinching) return;
+            // Видео — не перехватываем, чтобы работали нативные контролы
+            if (e.target.closest('video')) return;
+            viewerState.isDragging = true;
+            viewerState.startX = e.clientX;
+            viewerState.startY = e.clientY;
+            stage.setPointerCapture(e.pointerId);
+        });
+
+        stage.addEventListener('pointermove', (e) => {
+            if (!viewerState.isDragging || viewerState.isAnimating || viewerState.isPinching) return;
+            const dx = e.clientX - viewerState.startX;
+            const dy = e.clientY - viewerState.startY;
+
+            if (viewerState.scale > 1) {
+                viewerState.panX += dx;
+                viewerState.panY += dy;
+                viewerState.startX = e.clientX;
+                viewerState.startY = e.clientY;
+                applyZoom(false);
+            } else {
+                viewerState.dragX = dx;
+                track.style.transition = 'none';
+                track.style.transform = `translateX(calc(-100vw + ${viewerState.dragX}px))`;
+            }
+        });
+
+        stage.addEventListener('pointerup', () => {
+            if (!viewerState.isDragging) return;
+            viewerState.isDragging = false;
+
+            if (viewerState.scale === 1 && !viewerState.isPinching) {
+                const threshold = window.innerWidth * 0.16;
+                if (viewerState.dragX < -threshold) {
+                    slideNext();
+                } else if (viewerState.dragX > threshold) {
+                    slidePrev();
+                } else {
+                    track.style.transition = 'transform 0.25s ease-out';
+                    track.style.transform = 'translateX(-100vw)';
+                }
+            }
+        });
+
+        stage.addEventListener('pointercancel', () => {
+            viewerState.isDragging = false;
+            resetTrackPosition();
+        });
+
+        function slideNext() {
+            if (viewerState.isAnimating) return;
+            if (viewerState.items.length < 2) return;
+            viewerState.isAnimating = true;
+            track.style.transition = 'transform 0.28s cubic-bezier(0.25, 1, 0.5, 1)';
+            track.style.transform = 'translateX(-200vw)';
+
+            setTimeout(() => {
+                viewerState.index = (viewerState.index + 1) % viewerState.items.length;
+                renderViewerSlides();
+                viewerState.isAnimating = false;
+            }, 280);
         }
 
-        lbStage.addEventListener("pointerup", endPointer);
-        lbStage.addEventListener("pointercancel", endPointer);
+        function slidePrev() {
+            if (viewerState.isAnimating) return;
+            if (viewerState.items.length < 2) return;
+            viewerState.isAnimating = true;
+            track.style.transition = 'transform 0.28s cubic-bezier(0.25, 1, 0.5, 1)';
+            track.style.transform = 'translateX(0vw)';
+
+            setTimeout(() => {
+                viewerState.index = (viewerState.index - 1 + viewerState.items.length) % viewerState.items.length;
+                renderViewerSlides();
+                viewerState.isAnimating = false;
+            }, 280);
+        }
+
+        arrowPrevEl.addEventListener('click', (e) => { e.stopPropagation(); slidePrev(); });
+        arrowNextEl.addEventListener('click', (e) => { e.stopPropagation(); slideNext(); });
+
+        function openViewer(projectId, mediaIndex) {
+            const project = projects.find(p => p.id === projectId);
+            if (!project) return;
+            viewerState.items = project.media.map(m => ({ ...m }));
+            viewerState.index = Number.isFinite(mediaIndex) ? mediaIndex : 0;
+            viewerState.title = project.title;
+            viewer.classList.add('open');
+            viewer.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            renderViewerSlides();
+        }
+
+        function closeViewer() {
+            pauseAllVideos();
+            viewer.classList.remove('open');
+            viewer.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            resetZoom(false);
+            viewerState.items = [];
+            viewerState.index = 0;
+        }
+
+        document.getElementById('viewerCloseBtn').addEventListener('click', closeViewer);
+
+        document.addEventListener('keydown', (e) => {
+            if (!viewer.classList.contains('open')) return;
+            if (e.key === 'Escape') closeViewer();
+            if (e.key === 'ArrowRight') slideNext();
+            if (e.key === 'ArrowLeft') slidePrev();
+        });
+
+        /* Открытие просмотра по клику на миниатюру */
+        document.addEventListener('click', e => {
+            const media = e.target.closest('.media');
+            if (!media) return;
+            const gallery = media.closest('.gallery');
+            if (!gallery) return;
+            openViewer(gallery.dataset.project, parseInt(media.dataset.index, 10));
+        });
     </script>
 </body>
 

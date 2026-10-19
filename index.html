@@ -235,7 +235,7 @@
             color: #dcdce0;
         }
 
-        /* ---------- SKILLS ---------- */
+        /* ---------- SKILLS (перенесено вниз) ---------- */
         .skills {
             max-width: var(--max);
             margin: 0 auto;
@@ -345,7 +345,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 16px;
             color: var(--gold);
-            grid-row: span 3;
+            grid-row: span 2;
             padding-top: 6px;
             letter-spacing: .05em;
         }
@@ -361,7 +361,69 @@
         .project-sub {
             color: var(--muted);
             font-size: 14.5px;
-            margin: 2px 0 10px;
+            margin: 2px 0 0;
+        }
+
+        /* ---------- DETAILS (скрытые теги + пайплайн) ---------- */
+        .project-details {
+            margin-top: 18px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: linear-gradient(180deg, rgba(255, 255, 255, .015), transparent);
+            overflow: hidden;
+            transition: border-color .3s;
+        }
+
+        .project-details[open] {
+            border-color: rgba(201, 168, 106, .3);
+        }
+
+        .project-details summary {
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 11px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background .2s;
+        }
+
+        .project-details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .project-details summary:hover {
+            background: rgba(255, 255, 255, .025);
+        }
+
+        .project-details summary svg {
+            width: 16px;
+            height: 16px;
+            transition: transform .3s ease;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.6;
+            flex-shrink: 0;
+        }
+
+        .project-details[open] summary svg {
+            transform: rotate(180deg);
+        }
+
+        .project-details-body {
+            padding: 4px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .project-details-body .pipeline {
+            margin: 0;
         }
 
         .tags {
@@ -385,7 +447,7 @@
             display: flex;
             align-items: stretch;
             gap: 0;
-            margin: 0 0 24px;
+            margin: 0;
             border: 1px solid var(--line);
             border-radius: var(--radius);
             background: linear-gradient(180deg, rgba(255, 255, 255, .015), transparent);
@@ -423,7 +485,6 @@
                 background: transparent;
                 border: none;
                 gap: 0;
-                margin-bottom: 18px;
             }
 
             .step {
@@ -832,7 +893,7 @@
 
 <body>
 
-    <!-- ВЕРХНЕЕ МЕНЮ: Семантические разделы -->
+    <!-- ВЕРХНЕЕ МЕНЮ -->
     <header class="top">
         <div class="top-inner">
             <div class="brand">Иван <span>Филин</span></div>
@@ -844,7 +905,7 @@
         </div>
     </header>
 
-    <!-- ПЕРВЫЙ ЭКРАН: Четкий фокус на ювелирный визуал -->
+    <!-- ПЕРВЫЙ ЭКРАН -->
     <section class="hero">
         <div class="hero-kicker">High-End 3D &middot; Motion &middot; Generative AI</div>
         <h1>Ювелирный визуал,<br>который продаёт <em>форму и блеск</em></h1>
@@ -875,7 +936,10 @@
         </div>
     </section>
 
-    <!-- СТЕК И КОМПЕТЕНЦИИ: 4 этапа ювелирного продакшна -->
+    <!-- КЕЙСЫ -->
+    <main id="projects"></main>
+
+    <!-- СТЕК И КОМПЕТЕНЦИИ (перенесено вниз, перед контактами) -->
     <section class="skills" id="skills">
         <div class="skills-head">
             <div class="hero-kicker">Пайплайн и стек инструментов</div>
@@ -932,9 +996,6 @@
         </div>
     </section>
 
-    <!-- КЕЙСЫ -->
-    <main id="projects"></main>
-
     <!-- КОНТАКТЫ -->
     <footer id="contact">
         <div class="f-title">Создадим визуал для вашей коллекции?</div>
@@ -949,7 +1010,7 @@
         <small>&copy; <span id="year"></span> Иван Филин &middot; 3D / AI CG визуал для ювелирных брендов</small>
     </footer>
 
-    <!-- LIGHTBOX С НАСТОЯЩИМ СВАЙПОМ ДЛЯ СМАРТФОНОВ -->
+    <!-- LIGHTBOX -->
     <div class="lb" id="lb" aria-hidden="true" role="dialog">
         <div class="lb-counter" id="lbCounter"></div>
         <button class="lb-btn lb-close" id="lbClose" aria-label="Закрыть">
@@ -997,7 +1058,7 @@
 
     <script>
         /* ============================================================
-           ДАННЫЕ ПРОЕКТОВ (Каждый со своим уникальным пайплайном)
+           ДАННЫЕ ПРОЕКТОВ
            ============================================================ */
         const projects = [
             {
@@ -1018,15 +1079,15 @@
             {
                 id: "diamant",
                 title: "Diamant",
-                subtitle: "Презентационный моушн-ролик для социальных сетей",
+                subtitle: "High-End моушн-ролик серег для социальных сетей",
                 tags: ["Cinema 4D", "Blender", "After Effects", "Sound Design"],
                 pipeline: [
-                    { step: "3D Сцена", desc: "Подготовка геометрии кольца и настройка студийного света в Blender" },
-                    { step: "Анимация", desc: "Динамичный пролет камеры, акценты на гранях в Cinema 4D" },
+                    { step: "3D Сцена", desc: "Подготовка геометрии серег и настройка студийного света в Blender" },
+                    { step: "Анимация", desc: "Динамичный пролёт камеры, акценты на гранях и подвесках серег в Cinema 4D" },
                     { step: "Композитинг", desc: "Световые эффекты, оптические вспышки и саунд-дизайн в After Effects" }
                 ],
                 media: [
-                    { type: "video", src: "assets/diamant.mp4", poster: "assets/diamant-poster.png", alt: "Diamant — моушн ролик", ratio: "16/9" }
+                    { type: "video", src: "assets/diamant.mp4", poster: "assets/diamant-poster.png", alt: "Diamant — моушн-ролик серег", ratio: "16/9" }
                 ]
             },
             {
@@ -1067,6 +1128,7 @@
            РЕНДЕР КАРТОЧЕК
            ============================================================ */
         const ICON_PLAY = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+        const ICON_CHEVRON = '<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
 
         function mediaHTML(m, i) {
             const ratio = m.ratio || "4/5";
@@ -1095,6 +1157,10 @@
             </div>`).join("");
         }
 
+        function tagsHTML(tags) {
+            return tags.map(t => `<span>${t}</span>`).join("");
+        }
+
         function projectHTML(p, idx) {
             return `
             <article class="project reveal" id="${p.id}">
@@ -1102,15 +1168,23 @@
                     <div class="project-num">${String(idx + 1).padStart(2, '0')}</div>
                     <h2>${p.title}</h2>
                     <p class="project-sub">${p.subtitle}</p>
-                    <div class="tags">${p.tags.map(t => `<span>${t}</span>`).join("")}</div>
                 </header>
-
-                <div class="pipeline">${pipelineHTML(p.pipeline)}</div>
 
                 <div class="gallery" data-count="${p.media.length}" data-project="${p.id}">
                     ${p.media.map((m, i) => mediaHTML(m, i)).join("")}
                 </div>
                 <div class="dots" aria-hidden="true"></div>
+
+                <details class="project-details">
+                    <summary>
+                        <span>Технические детали и пайплайн</span>
+                        ${ICON_CHEVRON}
+                    </summary>
+                    <div class="project-details-body">
+                        <div class="tags">${tagsHTML(p.tags)}</div>
+                        <div class="pipeline">${pipelineHTML(p.pipeline)}</div>
+                    </div>
+                </details>
             </article>`;
         }
 
@@ -1141,7 +1215,7 @@
             items.forEach(it => io.observe(it));
         });
 
-        /* Плавное появление при скролле */
+        /* Плавное появление */
         const revIO = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
@@ -1153,7 +1227,7 @@
         document.querySelectorAll(".reveal").forEach(el => revIO.observe(el));
 
         /* ============================================================
-           LIGHTBOX С ПОДДЕРЖКОЙ ГОРИЗОНТАЛЬНОГО СВАЙПА НА СМАРТФОНЕ
+           LIGHTBOX
            ============================================================ */
         const lb = document.getElementById("lb");
         const lbStage = document.getElementById("lbStage");
@@ -1264,7 +1338,7 @@
             openLightbox(gallery.dataset.project, parseInt(media.dataset.index, 10));
         });
 
-        /* ЖЕСТЫ: СВАЙП НА МОБИЛКЕ + ПИНЧ-ЗУМ */
+        /* ЖЕСТЫ */
         let pointers = new Map();
         let lastDist = 0, startScale = 1;
         let dragStart = null;
